@@ -1,3 +1,5 @@
+![banner](banner.png)
+
 # Proyecto 1: Algortimo de Sistema de Costos
 ## Planteamiento
 Se necesita un algoritmo de pseudocódigo que simule un sistema para calcular el costo de un producto con base en su precio original y el porcentaje de descuento aplicado.
