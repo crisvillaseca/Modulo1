@@ -15,7 +15,6 @@ El pseudocodigo debe cumplir con los siguientes parámetros:
 ## Solución explicada paso a paso
 1. Primero se declaran las variables que se utilizarán en el código:
 
-- `opcion` es la elección del producto a comprar.
 - `precio` es el valor del producto.
 - `peso` el peso del producto.
 - `descuento` es el descuento aplicado por el cupón.
@@ -30,64 +29,185 @@ El pseudocodigo debe cumplir con los siguientes parámetros:
 - `costoenvio` valor del envio para desglosarlo en resumen.
 - `totalcompleto`total final más valor de envio.
 - `cantidad` unidades elegidas para comprar.
-- `nombre` nombre de cada producto para mencionarlo en el resumen.
 
 ```
-  Definir opcion, precio, peso, descuento, valordescuento, totalDescuento, Iva, totalIVA, descuentoCantidad, TotalCantidad, costopeso, totalpeso, costoenvio, totalcompleto Como Real
+  Definir opcion, precio, peso, descuento, valordescuento, totalDescuento, Iva, totalIVA, descuentoCantidad, TotalCantidad, costopeso, totalpeso, costoenvio, totalcompleto, valorenvio Como Real
 	Definir Cantidad Como Entero
-	Definir nombre como cadena
 ```
 
-
-2. Se solicita al usuario seleccionar un producto:
-- Se da una bienvenida al cliente.
-- Se genera un bucle para que el cliente tome un numero dentro de las opciones.
-- Dentro de cada opcion se asigna el precio, nombre y el peso de cada producto.
-
+2.Se dimensiona una tabla de destinos con su nombre y valor:
 ```
-Escribir "Bienvenido a Electronicos Sonya"
+Dimensionar destinos[5,2]
 	
-	Repetir
-	Escribir "Seleccione el producto:"
-	Escribir "1. PlayStation 5 Valor: $439.000"
-	Escribir "2. Audifonos Inalambricos Valor: $28.990"
-	Escribir "3. Mouse + Teclado Gamer Valor $15.990"
-	Escribir "4. Gabinete RGB Valor $31.990"
-	Escribir "5. Cable HDMI Valor $3.490"
-	Escribir "6. Cargador Tipo C Valor $5.490"
-	Escribir "Ingrese el numero correspondiente al producto que desea:"
-	Leer Opcion 
-	Segun Opcion hacer
-		Caso 1:
-			precio <- 439000
-			peso<-3.2
-			nombre<-"PlayStation 5"
-		Caso 2:
-			precio <- 28990
-			peso<-0.3
-			nombre<-"Audifonos Inalambricos"
-		Caso 3:
-			precio <- 15990
-			peso<-0.85
-			nombre<-"Mouse + Teclado Gamer"
-		Caso 4:
-			precio <- 31990
-			peso<-3
-			nombre<-"Gabinete RGB"
-		Caso 5:
-			precio <- 3490
-			peso<-0.1
-			nombre<-"Cable HDMI"
-		Caso 6:
-			precio <- 5490
-			peso<-0.2
-			nombre<-"Cargador Tipo C"
-		De Otro Modo:
-			Escribir "..."
-			Escribir "Opcion invalida. Por favor seleccione un numero valido"
-	FinSegun
-	Hasta Que Opcion<7 y Opcion>0
+	destinos[1,1] = "Region Metropolitana"
+	destinos[1,2] = "5000"
+	destinos[2,1] = "Región de Antofagasta."
+	destinos[2,2] = "10000"
+	destinos[3,1] = "Region de O´higgins "
+	destinos[3,2] = "7000"
+	destinos[4,1] ="Región de Valparaíso"
+	destinos[4,2] ="6000"
+	destinos[5,1] ="Región de Coquimbo."
+	destinos[5,2] ="7000"
+```
+
+3. Se solicita al usuario el `precio` y el `descuento` del producto aplicandolo de inmediato:
+
+```
+	Escribir "Ingrese el precio original del producto:"
+	Leer precio
+	
+	Escribir "Ingrese el cupon de descuento (%) :"
+	Leer descuento
+
+	valordescuento<-precio*(descuento/100)
+	totalDescuento <- precio - (precio * (descuento / 100 ))
+	
+	Si totalDescuento < 0 Entonces
+		totalDescuento<-0
+	FinSi
+	
+
+```
+
+4. Se solicita al usuario el porcentaje del `IVA`, posteriormente aplicarlo:
+```
+	Escribir "Ingrese el porcentaje de impuesto:"
+	Leer Iva 
+	
+	Iva<-totalDescuento*(Iva/100)
+	totalIVA<-totalDescuento+Iva
+
+```
+
+5.Se solicita al usuario la `cantidad` de unidades que deesea comprar y posteriormente se calcula aplicando un descuento por la compra de dos o mas productos (este descuento seria de un 15%):
+
+```
+Escribir "¿Cuantas unidades desea comprar?:"
+	Leer Cantidad
+	
+	Si Cantidad>=2 Entonces
+		descuentoCantidad<-totalIVA*0.15
+		TotalCantidad<-(totalIVA*Cantidad)-descuentoCantidad
+	SiNo
+		TotalCantidad<-totalIVA
+	FinSi
+	
+```
+
+6. Se solicita el `peso` del paquete y el destino del envío, proyectando una lista y añadiendo el valor al precio actual del producto:
+```
+Escribir "Ingrese el peso del paquete:"
+	Leer peso
+	
+	costopeso<-peso*3000  
+	totalpeso<-TotalCantidad+costopeso
+	
+	Escribir "Seleccione el destino del envio:"
+	para i=1 Hasta 5 Con Paso 1 Hacer
+		Escribir i, ". ", destinos[i,1]
+	FinPara
+	Leer destino
+	
+	envio<-destinos[destino,2]
+	costoenvio<- ConvertirANumero(envio)
+	
+	valorenvio<-costoenvio+costopeso
+	totalcompleto<-totalpeso+costoenvio
+```
+
+7. Por ultimo se refleja un resumen de la compra:
+
+```
+Escribir "Resumen de compra: "
+	Escribir "Valor producto: ", precio
+	Escribir "Cupon de descuento: %",descuento ", -", Redon(valordescuento)
+	Escribir "IVA: ", redon(IVA)
+	Escribir "Descuento por Cantidad: -", Redon(descuentoCantidad)
+	Escribir "Costo de Envio: ", valorenvio 
+	Escribir "Total: ", Redon(totalcompleto)
+```
+
+## Pseudocodigo completo
+
+La solucion en conjunto seria:
+```
+	Definir opcion, precio, peso, descuento, valordescuento, totalDescuento, Iva, totalIVA, descuentoCantidad, TotalCantidad, costopeso, totalpeso, costoenvio, totalcompleto, valorenvio Como Real
+	Definir Cantidad Como Entero
+	
+	
+	Dimensionar destinos[5,2]
+	
+	destinos[1,1] = "Region Metropolitana"
+	destinos[1,2] = "5000"
+	destinos[2,1] = "Región de Antofagasta."
+	destinos[2,2] = "10000"
+	destinos[3,1] = "Region de O´higgins "
+	destinos[3,2] = "7000"
+	destinos[4,1] ="Región de Valparaíso"
+	destinos[4,2] ="6000"
+	destinos[5,1] ="Región de Coquimbo."
+	destinos[5,2] ="7000"
+	
+	Escribir "Ingrese el precio original del producto:"
+	Leer precio
+	
+	Escribir "Ingrese el cupon de descuento (%) :"
+	Leer descuento
+	
+	valordescuento<-precio*(descuento/100)
+	totalDescuento <- precio - (precio * (descuento / 100 ))
+	
+	Si totalDescuento < 0 Entonces
+		totalDescuento<-0
+	FinSi
+	
+	Escribir " "
+	
+	Escribir "Ingrese el porcentaje de impuesto:"
+	Leer Iva 
+	
+	Iva<-totalDescuento*(Iva/100)
+	totalIVA<-totalDescuento+Iva
+	
+	Escribir "¿Cuantas unidades desea comprar?:"
+	Leer Cantidad
+	
+	Si Cantidad>=2 Entonces
+		descuentoCantidad<-totalIVA*0.15
+		TotalCantidad<-(totalIVA*Cantidad)-descuentoCantidad
+	SiNo
+		TotalCantidad<-totalIVA
+	FinSi
+	
+	Escribir "Ingrese el peso del paquete:"
+	Leer peso
+	
+	costopeso<-peso*3000  
+	totalpeso<-TotalCantidad+costopeso
+	
+	Escribir "Seleccione el destino del envio:"
+	para i=1 Hasta 5 Con Paso 1 Hacer
+		Escribir i, ". ", destinos[i,1]
+	FinPara
+	Leer destino
+	
+	envio<-destinos[destino,2]
+	costoenvio<- ConvertirANumero(envio)
+	
+	valorenvio<-costoenvio+costopeso
+	totalcompleto<-totalpeso+costoenvio
+	
+	Escribir "Resumen de compra: "
+	Escribir "Valor producto: ", precio
+	Escribir "Cupon de descuento: %",descuento ", -", Redon(valordescuento)
+	Escribir "IVA: ", redon(IVA)
+	Escribir "Descuento por Cantidad: -", Redon(descuentoCantidad)
+	Escribir "Costo de Envio: ", valorenvio 
+	Escribir "Total: ", Redon(totalcompleto)
 ```
 
 
-3. Se abre la opción de añadir el valor del| cupon de descuento|
+
+
+
