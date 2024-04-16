@@ -82,7 +82,7 @@ Dimensionar destinos[5,2]
 
 ```
 
-5.Se solicita al usuario la `cantidad` de unidades que deesea comprar y posteriormente se calcula aplicando un descuento por la compra de dos o mas productos (este descuento seria de un 15%):
+5.Se solicita al usuario la `cantidad` de unidades que deesea comprar y posteriormente se calcula aplicando un descuento por la compra de dos o mas productos (este descuento seria de un 5%):
 
 ```
 Escribir "¿Cuantas unidades desea comprar?:"
