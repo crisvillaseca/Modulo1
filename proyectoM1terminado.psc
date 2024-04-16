@@ -7,13 +7,13 @@ Algoritmo proyecto2
 	
 	destinos[1,1] = "Region Metropolitana"
 	destinos[1,2] = "5000"
-	destinos[2,1] = "Región de Antofagasta."
+	destinos[2,1] = "RegiÃ³n de Antofagasta."
 	destinos[2,2] = "10000"
-	destinos[3,1] = "Region de O´higgins "
+	destinos[3,1] = "Region de OÂ´higgins "
 	destinos[3,2] = "7000"
-	destinos[4,1] ="Región de Valparaíso"
+	destinos[4,1] ="RegiÃ³n de ValparaÃ­so"
 	destinos[4,2] ="6000"
-	destinos[5,1] ="Región de Coquimbo."
+	destinos[5,1] ="RegiÃ³n de Coquimbo."
 	destinos[5,2] ="7000"
 	
 	Escribir "Ingrese el precio original del producto:"
@@ -37,12 +37,12 @@ Algoritmo proyecto2
 	Iva<-totalDescuento*(Iva/100)
 	totalIVA<-totalDescuento+Iva
 	
-	Escribir "¿Cuantas unidades desea comprar?:"
+	Escribir "Â¿Cuantas unidades desea comprar?:"
 	Leer Cantidad
 	
 	Si Cantidad>=2 Entonces
-		descuentoCantidad<-totalIVA*0.15
-		TotalCantidad<-(totalIVA*Cantidad)-descuentoCantidad
+		descuentoCantidad<-totalIVA*0.95
+		TotalCantidad<-Cantidad*descuentoCantidad
 	SiNo
 		TotalCantidad<-totalIVA
 	FinSi
