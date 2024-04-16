@@ -89,8 +89,8 @@ Escribir "¿Cuantas unidades desea comprar?:"
 	Leer Cantidad
 	
 	Si Cantidad>=2 Entonces
-		descuentoCantidad<-totalIVA*0.15
-		TotalCantidad<-(totalIVA*Cantidad)-descuentoCantidad
+		descuentoCantidad<-totalIVA*0.95
+		TotalCantidad<-Cantidad*descuentoCantidad
 	SiNo
 		TotalCantidad<-totalIVA
 	FinSi
